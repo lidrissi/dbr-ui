@@ -1,0 +1,35 @@
+.widgetWrapper {
+  height: 100%;
+  top: 0;
+  right: 0;
+  position: absolute;
+  width: 100%;
+  border-radius: 0.2rem;
+  overflow: hidden;
+  .actionsContainer {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}
+
+div.noDataFound {
+  height: 10em;
+  position: relative;
+}
+div.noDataFound {
+  margin: 0;
+  background: yellow;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+div.noDataFound i {
+  height: 100px;
+  width: 100px;
+}
