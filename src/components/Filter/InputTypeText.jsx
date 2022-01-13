@@ -1,6 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
-import { notificationService } from '../../../widgets/GenericWidget/NotificationService';
-
+import { notificationService } from "../../services/NotificationService";
 
 const InputTypeText = memo((props) => {
   const { tag } = props

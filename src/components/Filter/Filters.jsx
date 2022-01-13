@@ -1,37 +1,27 @@
 import React, { useState, useEffect, useRef, lazy, memo } from "react";
 import io from 'socket.io-client'
-import Alert from "components/Alert";
-import { useDeleteFilterFromDashboard } from "hooks/api/filter";
-import { connect } from "react-redux";
-import { mapParams, notificationService } from '../../../widgets/GenericWidget/NotificationService';
 import InputText from "./InputTypeText";
 import './filters.scss';
-import FilterActionsMenu from "./FilterActionsMenu";
+
 import { Button } from "reactstrap";
 import { BACKEND_SOCKET_API_URL } from "constants/resources";
+import { mapParams, notificationService } from "../../services/NotificationService";
 
 const DatePicker = lazy(() =>
-  import(/* webpackChunkName: "DatePicker" */ '../../DatePicker'),
+  import(/* webpackChunkName: "DatePicker" */ '../Common/DatePicker'),
 )
 
 const SelectOptionFilter = lazy(() =>
   import(/* webpackChunkName: "SelectOptionFilter" */ './SelectOptionFilter'),
 )
 
-const FiltersModalWizard = lazy(() =>
-  import(/* webpackChunkName: "FiltersModalWizard" */ './FiltersModalWizard'),
-)
-
-const Filters = memo(({ filters, editMode, widgets }) => {
+const Filters = memo(({ filters, widgets }) => {
   const ref = useRef([]);
   let socket;
 
   const [tags, setTags] = useState(filters || [])
-  const [showFilterModal, setShowFilterModal] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [currentFilter, setCurrentFilter] = useState(null)
   const [selectedFilter, setSelecteFilter] = useState({})
-  const deleteFilter = useDeleteFilterFromDashboard();
   const [notification, setNotification] = useState({ appParamsValue: {} })
 
   const removeFilterTag = (indexToRemove, filterToRemove) => {
@@ -127,32 +117,12 @@ const Filters = memo(({ filters, editMode, widgets }) => {
     return socket
   }
 
-  const onConfirmDelete = async () => {
-    if (!selectedFilter.item.dashboardId) {
-      afterDelete()
-      return
-    }
-    deleteFilter.mutateAsync(selectedFilter.item).then(() => {
-      afterDelete()
-    })
-  }
-
   const afterDelete = () => {
     setTags(tags.filter(tag => tag._id != selectedFilter.item._id))
     hideDeleteDialog()
     resetAppParams(selectedFilter.item)
     sendNotification(notification)
     setSelecteFilter({})
-  }
-
-  const editFilterTag = (tag) => {
-    setShowFilterModal(true)
-    setCurrentFilter(tag)
-  }
-
-  const hideFilterModal = () => {
-    setShowFilterModal(false)
-    setCurrentFilter(null)
   }
 
   const resetFilter = (filter, index) => {
@@ -175,17 +145,10 @@ const Filters = memo(({ filters, editMode, widgets }) => {
     setShowDeleteDialog(false)
   }
 
+  console.log("====>", filters);
   return (
+
     <>
-      <Alert
-        showAlert={showDeleteDialog}
-        title="Delete Filter"
-        text="Do you want to delete the specified Filter ?"
-        action={onConfirmDelete}
-        allowAction
-        onCancel={hideDeleteDialog}
-      />
-      {showFilterModal && <FiltersModalWizard toggle={hideFilterModal} status={true} filter={currentFilter} />}
       <div className="dashboard-filters flex-wrap">
         {tags && tags.map((tag, index) => (
           <div className="filter-item" key={index}>
@@ -194,10 +157,7 @@ const Filters = memo(({ filters, editMode, widgets }) => {
                 {tag.name || tag.configuration.appParam?.label}
               </span>
               {(tag.type == 'inputText') ? <Button close onClick={() => removeFilterTag(index, tag)} /> :
-                editMode && <FilterActionsMenu
-                  onDelete={() => removeFilterTag(index, tag)}
-                  onEdit={() => editFilterTag(tag)}
-                />}
+                null}
             </div>
             <span className="filter-item__value">
               {tag.type === "datePickerAvance" ? (
@@ -224,9 +184,4 @@ const Filters = memo(({ filters, editMode, widgets }) => {
   );
 });
 
-const mapStateToProps = ({ dashboard }) => ({
-  widgets: dashboard.widgets,
-  editMode: dashboard.editMode
-})
-
-export default connect(mapStateToProps)(Filters)
+export default Filters

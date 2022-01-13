@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Suspense } from 'react'
 import * as am4core from '@amcharts/amcharts4/core'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { withSize } from 'react-sizeme'
@@ -11,7 +11,7 @@ import './customizer.scss';
 import { formatDate } from 'helpers/date'
 import WidgetWrapper from '../Widget/WidgetWrapper'
 import { mapParams } from '../../services/NotificationService'
-// import Filters from '../Filter/Filters'
+import Filters from '../Filter/Filters'
 
 
 class Customizer extends React.PureComponent {
@@ -122,10 +122,12 @@ class Customizer extends React.PureComponent {
 
     return (
       <>
-        {/* <div>
-          <Filters filters={this.props.filters} />
-        </div> */}
-
+        <Suspense fallback={<div />}>
+          <Filters
+            widgets={this.props.widgets}
+            filters={this.props.filters}
+          />
+        </Suspense>
         <div className="row m-auto">
           <ResponsiveReactGridLayout
             width={width}

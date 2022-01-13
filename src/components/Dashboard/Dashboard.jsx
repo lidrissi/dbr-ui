@@ -1,4 +1,5 @@
 import React, { useState, useEffect, memo } from 'react'
+import PropTypes from 'prop-types'
 import { deductDateRangeFromType } from 'helpers/date';
 import { getDashboardFilter } from '../../api/filter';
 import { getDashboardWidgets } from '../../api/dashboard';
@@ -10,11 +11,11 @@ const Dashboard = memo((props) => {
   const [layouts, setLayouts] = useState({})
   const [filters, setFilters] = useState([])
 
-  const dashboardId = '615dac10b0e71057228737f0'// props.title
+  const dashboardId = props.id
 
   const fetchWidgets = () => {
     getDashboardWidgets(dashboardId).then((dashboardWidgets) => {
-      const { layouts = {}, widgets = [], appearance, share, owner } = dashboardWidgets
+      const { layouts = {}, widgets = [], appearance } = dashboardWidgets
       const widgetsObject = {}
       widgets.forEach((widget) => {
         // add only valid widget
@@ -45,7 +46,7 @@ const Dashboard = memo((props) => {
 
   const fetchFilters = () => {
     getDashboardFilter(dashboardId).then((dashboardFilters) => {
-      const filters = (dashboardFilters.data || []).map((filter) => {
+      const filters = (dashboardFilters || []).map((filter) => {
         if (filter.type == 'datePickerAvance' && filter.configuration?.dateRangeType != 'CUSTOM_RANGE') {
           const { startDate, endDate } = deductDateRangeFromType(filter.configuration.dateRangeType)
           filter.configuration.startDateRange = startDate
@@ -61,8 +62,9 @@ const Dashboard = memo((props) => {
     fetchWidgets()
     fetchFilters()
   },
-    [])
+    [props.id])
 
+  console.log("++++", filters);
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <Customizer
@@ -76,8 +78,8 @@ const Dashboard = memo((props) => {
   )
 })
 
-// const mapActionToProps = {
-//   setDashboardData: setDashboardData
-// }
+Dashboard.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default Dashboard

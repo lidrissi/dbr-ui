@@ -2,7 +2,7 @@ import { noQueryDatasource } from "constants/datasource";
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { fetchDatasourceQuery } from "services/datasource/datasourceManager";
-import { mapParams, notificationService } from '../../../widgets/GenericWidget/NotificationService';
+import { mapParams, notificationService } from "../../services/NotificationService";
 
 const SelectOptionFilter = forwardRef((props, ref) => {
 
