@@ -59,12 +59,13 @@ const Dashboard = memo((props) => {
   }
 
   useEffect(() => {
-    fetchWidgets()
-    fetchFilters()
+    if (props.id) {
+      fetchWidgets()
+      fetchFilters()
+    }
   },
     [props.id])
 
-  console.log("++++", filters);
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">
       <Customizer

@@ -67,6 +67,7 @@ const WidgetWrapper = memo((props) => {
     const loadedWidget = lazy(() => {
       try {
         const systemWidget = isSystemWidget(widget.stWidget.type)
+        console.log("====", systemWidget ? widget.stWidget.type : 'GenericWidget');
         return import(
           `./${systemWidget ? widget.stWidget.type : 'GenericWidget'}`
         )

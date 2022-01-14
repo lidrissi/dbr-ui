@@ -145,7 +145,6 @@ const Filters = memo(({ filters, widgets }) => {
     setShowDeleteDialog(false)
   }
 
-  console.log("====>", filters);
   return (
 
     <>

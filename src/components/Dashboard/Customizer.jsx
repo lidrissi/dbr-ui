@@ -49,14 +49,13 @@ class Customizer extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.widgets != prevProps.widgets) {
+    if (this.props.widgets != prevProps.widgets || this.props.layouts != prevProps.layouts) {
       this.setState({
         widgets: this.props.widgets,
         layouts: this.props.layouts,
       })
     }
     if (this.props.appearance != prevProps.appearance) {
-      // am4core.unuseTheme(this.am4themes_dashboard);
       am4core.useTheme(this.am4themes_dashboard);
     }
   }
@@ -135,7 +134,7 @@ class Customizer extends React.PureComponent {
             cols={cols}
             breakpoints={breakpoints}
             onLayoutChange={this.onLayoutChange}
-            isDraggable={false}
+            isDraggable={true}
             isResizable={false}
             rowHeight={rowHeight}
           >
@@ -178,7 +177,7 @@ Customizer.defaultProps = {
   className: 'layout',
   rowHeight: 200,
   cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-  breakpoints: { lg: 1300, md: 996, sm: 768, xs: 480, xxs: 0 }
+  breakpoints: { lg: 1000, md: 996, sm: 768, xs: 480, xxs: 0 }
 
 }
 
