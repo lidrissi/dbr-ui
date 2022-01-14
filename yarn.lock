@@ -2043,6 +2043,26 @@
     "regenerator-runtime" "^0.13.7"
     "ts-dedent" "^2.0.0"
 
+"@storybook/addon-storysource@^6.4.12":
+  "integrity" "sha512-ijJvanEVsdzbbQ/fVcgV6/9iDb2hk7+MTmqEnQxlx2oDggLjCJurw6tTVzYiUgw/g7VMY9u5SfmuoXbnkvNw5Q=="
+  "resolved" "https://registry.npmjs.org/@storybook/addon-storysource/-/addon-storysource-6.4.12.tgz"
+  "version" "6.4.12"
+  dependencies:
+    "@storybook/addons" "6.4.12"
+    "@storybook/api" "6.4.12"
+    "@storybook/client-logger" "6.4.12"
+    "@storybook/components" "6.4.12"
+    "@storybook/router" "6.4.12"
+    "@storybook/source-loader" "6.4.12"
+    "@storybook/theming" "6.4.12"
+    "core-js" "^3.8.2"
+    "estraverse" "^5.2.0"
+    "loader-utils" "^2.0.0"
+    "prettier" "^2.2.1"
+    "prop-types" "^15.7.2"
+    "react-syntax-highlighter" "^13.5.3"
+    "regenerator-runtime" "^0.13.7"
+
 "@storybook/addon-toolbars@6.4.12":
   "integrity" "sha512-FB908gujC4XB3Gf5KepaWyKiTR3NSGs2Nltcf2LpkC7RDgdeegucuPBnZLFsVkzpt8aOuMgNO/YciBhc4JH2Qg=="
   "resolved" "https://registry.npmjs.org/@storybook/addon-toolbars/-/addon-toolbars-6.4.12.tgz"
@@ -2055,7 +2075,7 @@
     "core-js" "^3.8.2"
     "regenerator-runtime" "^0.13.7"
 
-"@storybook/addon-viewport@6.4.12":
+"@storybook/addon-viewport@^6.4.12", "@storybook/addon-viewport@6.4.12":
   "integrity" "sha512-tCwVanwONQssQAMtMIOcVghmPgZN28xfUmTkGYtlmFNoDQp0G2vO/173Ynz9oe0nDwlDsqgtil12FCKulbrS7w=="
   "resolved" "https://registry.npmjs.org/@storybook/addon-viewport/-/addon-viewport-6.4.12.tgz"
   "version" "6.4.12"

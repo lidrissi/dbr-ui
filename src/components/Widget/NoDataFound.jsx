@@ -5,7 +5,7 @@ const NoDataFound = memo(() => {
         <div className="widgetWrapper">
             <div className="actionsContainer">
                 <img
-                    src={require('assets/images/nodata.svg')}
+                    src={'assets/images/nodata.svg'}
                     alt=""
                     title=""
                     style={{ width: '45px' }}

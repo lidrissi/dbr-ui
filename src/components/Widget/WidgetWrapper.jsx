@@ -9,7 +9,7 @@ import { isSystemWidget } from 'constants/widget'
 import NoDataFound from './NoDataFound'
 import { mapParams } from '../../services/NotificationService'
 
-const WidgetWrapper = memo((props) => {
+const WidgetWrapper = (props) => {
   const [Widget, setWidget] = useState({})
   const [widgetData, setWidgetData] = useState([])
   const [mode, setMode] = useState()
@@ -19,7 +19,9 @@ const WidgetWrapper = memo((props) => {
 
 
   useEffect(() => {
-    loadWidget()
+    if (props.widget) {
+      loadWidget()
+    }
   }, [])
 
   useEffect(() => {
@@ -64,10 +66,12 @@ const WidgetWrapper = memo((props) => {
 
   const loadWidget = () => {
     const { widget } = props
+    if (!widget.stWidget) {
+      return
+    }
     const loadedWidget = lazy(() => {
       try {
         const systemWidget = isSystemWidget(widget.stWidget.type)
-        console.log("====", systemWidget ? widget.stWidget.type : 'GenericWidget');
         return import(
           `./${systemWidget ? widget.stWidget.type : 'GenericWidget'}`
         )
@@ -78,14 +82,19 @@ const WidgetWrapper = memo((props) => {
     setWidget(loadedWidget)
   }
 
-  const { widget, widgetKey, hideTitle } = props
+  const { widget, showTitle } = props
 
+  if (!widget) {
+    return null
+  }
+
+  console.log('===', JSON.stringify(widget));
   return (
 
     <div className="widget h-100">
       {Widget && Object.keys(Widget).length !== 0 && (
         <Card style={{ height: '100%' }} className="widget-card">
-          {!hideTitle && widget.name && (
+          {showTitle && widget.name && (
             <CardHeader className="py-1 px-3 widget-header">
               <div className="d-flex flex flex-md-row align-items-center">
                 <p className="ml-2 mb-0 py-2 w-100 w-xs-100 text-sxlarge">
@@ -110,9 +119,7 @@ const WidgetWrapper = memo((props) => {
                     ...widget,
                     data: widgetData,
                   }}
-                  widgetKey={widgetKey}
                   onReceiveNotification={handleWidgetNotification}
-                  filters={props.filters}
                   exportChart={exportChart}
                   initChart={initChart}
                 />
@@ -126,7 +133,7 @@ const WidgetWrapper = memo((props) => {
       )}
     </div>
   )
-})
+}
 
 WidgetWrapper.propTypes = {
   widget: PropTypes.shape({
@@ -135,7 +142,7 @@ WidgetWrapper.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
   }),
-  widgetKey: PropTypes.string,
+  showTitle: PropTypes.bool,
 }
 
 

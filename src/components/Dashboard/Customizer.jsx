@@ -99,11 +99,8 @@ class Customizer extends React.PureComponent {
       <div key={key}>
         <div style={height}>
           <WidgetWrapper
-            {...this.props}
             {...widgets[key]}
-            filters={this.props.filters}
-            widgetKey={key}
-            hideTitle={['Image', 'Text'].indexOf(widgets[key].widget?.stWidget?.type) > -1}
+            showTitle={['Image', 'Text'].indexOf(widgets[key].widget?.stWidget?.type) == -1}
           />
         </div>
       </div>

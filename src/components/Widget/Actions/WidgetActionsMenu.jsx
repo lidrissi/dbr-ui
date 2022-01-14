@@ -1,15 +1,9 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { Button, ButtonGroup, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
-import AboutModal from "./AboutModal";
-
 
 const WidgetActionsMenu = memo(({
-    onExpand,
     onExport,
-    widget
 }) => {
-
-    const [showAppParamsModal, setShowAppParamsModal] = useState(false)
 
     return (
         <>
@@ -18,7 +12,6 @@ const WidgetActionsMenu = memo(({
                     <i className="simple-icon-options-vertical" />
                 </DropdownToggle>
                 <DropdownMenu>
-                    <DropdownItem onClick={onExpand} >Expand</DropdownItem>
                     {onExport && <DropdownItem tag="span">
                         Export
                         <div className="d-flex justify-content-center mt-1">
@@ -37,18 +30,8 @@ const WidgetActionsMenu = memo(({
                             </ButtonGroup>
                         </div>
                     </DropdownItem>}
-                    <DropdownItem divider />
-                    <DropdownItem onClick={() => setShowAppParamsModal(true)} >
-                        About
-                        <i className="ml-2 simple-icon-info" />
-                    </DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>
-            <AboutModal
-                isOpen={showAppParamsModal}
-                toggle={() => setShowAppParamsModal(false)}
-                widget={widget}
-            />
         </>
     )
 })

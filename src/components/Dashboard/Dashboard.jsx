@@ -5,7 +5,7 @@ import { getDashboardFilter } from '../../api/filter';
 import { getDashboardWidgets } from '../../api/dashboard';
 import Customizer from './Customizer';
 
-const Dashboard = memo((props) => {
+export const Dashboard = (props) => {
 
   const [widgets, setWidgets] = useState([])
   const [layouts, setLayouts] = useState({})
@@ -77,10 +77,8 @@ const Dashboard = memo((props) => {
       />
     </div>
   )
-})
+}
 
 Dashboard.propTypes = {
   id: PropTypes.string.isRequired,
 };
-
-export default Dashboard

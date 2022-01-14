@@ -23,11 +23,6 @@ class GenericWidget extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      events: [],
-      filters: []
-    };
-
     this.mappingParams = this.props.widget.mappingParams;
     this.subscription = notificationService.getNotification().subscribe((widgetNotification) => {
       this.handleNotification(widgetNotification)
@@ -118,30 +113,6 @@ class GenericWidget extends PureComponent {
     })
 
     this.notifyAllWidgets(widgetNotification);
-
-    // const filtersAppParams = this.props.filters.reduce((acc, { configuration }) => {
-    //   if (Array.isArray(configuration.appParam)) {
-    //     return configuration.appParam.map((param) => param?.value || '').concat(acc)
-    //   }
-    //   acc.push(configuration.appParam.value)
-    //   return acc
-    // }, [])
-    // this.mappingParams.forEach(item => {
-    //   if (!filtersAppParams.includes(item.appParam)) {
-    //     const filterConfig = {
-    //       name: item.appParam,
-    //       type: "inputText",
-    //       dashboardId: this.dashboardId,
-    //       configuration: {
-    //         appParam: { label: item.appParam, value: item.appParam },
-    //         inputText: widgetParam[item.responseParam]
-    //       }
-    //     }
-    //     if (filterConfig.name && filterConfig.configuration.appParam && filterConfig.configuration.inputText) {
-    //       this.props.addFilter(filterConfig)
-    //     }
-    //   }
-    // })
   }
 
   componentDidMount() {
