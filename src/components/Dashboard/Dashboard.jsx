@@ -81,4 +81,5 @@ export const Dashboard = (props) => {
 
 Dashboard.propTypes = {
   id: PropTypes.string.isRequired,
+  env: PropTypes.oneOf(['local', 'demo', 'sandbox']),
 };

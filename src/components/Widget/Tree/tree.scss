@@ -1,0 +1,111 @@
+$search-border-radius: 30px;
+$search-box-width: 300px;
+$search-input-width: 250px;
+$search-box-height: 32px;
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background: #fff;
+  overflow: scroll;
+  padding: .5rem 1rem;
+  .search-box {
+    display: flex;
+    background: #FFFFFF;
+    border: 1px solid #E8EAED;
+    box-sizing: border-box;
+    border-radius: $search-border-radius;
+    height: $search-box-height;
+    width: $search-box-width;
+    justify-content: space-around;
+    align-items: center;
+    input {
+        width: $search-input-width;
+        border-radius: $search-border-radius;
+        border: none;
+        outline: none;
+        margin: 0;
+        color: #3C4E64;
+        &::placeholder {
+            color: #B7BDC3;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+    &__icon:focus {
+        outline: none;
+    }
+    &__count {
+      white-space: nowrap;
+    }
+    &__controls {
+      color: #B7BDC3;
+    }
+    &__icon {
+        color: #B7BDC3;
+        cursor: pointer;
+        font-size: 1rem;
+        display: inherit;
+        margin: auto .5rem;
+    }
+  }
+  .rst__row {
+    border-radius: 20px;
+    cursor: pointer;
+    .rst__rowContents {
+      box-shadow: none;
+      border-radius: 0 20px 20px 0;
+      .rst__rowTitle {
+        font-weight: 400;
+        font-size: .8rem;
+      }
+      .rst__rowLabel {
+        padding-right: 0;
+      }
+      .rst__rowToolbar {
+        transform: translateY(-100%);
+        transition: all .2s ease-in;
+        opacity: 0;
+        margin-right: 10px;
+        .action {
+          vertical-align: middle;
+          border: 1px solid;
+          font-size: 0.8rem;
+          border-radius: 5px;
+          margin-left: .2rem;
+          outline: none;
+        }
+      }
+      &:hover {
+        .rst__rowToolbar {
+          opacity: 1;
+          transform: translateY(0%);
+        }
+      }
+    }
+     
+  }
+  .rst__placeholder {
+    display: none;
+  }
+  .rst__moveHandle, .rst__loadingHandle {
+    border-radius: 20px 0 0 20px;
+    height: 35px;
+    width: 35px;
+    box-shadow: none;
+    background-size: contain;
+    background-color: #293039;
+  }
+  .rst__rowContentsDragDisabled {
+    border-radius: 20px !important;
+  }
+}
+.transparent {
+  background: transparent;
+}
+
+

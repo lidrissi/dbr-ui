@@ -12,6 +12,7 @@ import { formatDate } from 'helpers/date'
 import WidgetWrapper from '../Widget/WidgetWrapper'
 import { mapParams } from '../../services/NotificationService'
 import Filters from '../Filter/Filters'
+import { DbrProvider } from '../../services/context'
 
 
 class Customizer extends React.PureComponent {
@@ -117,7 +118,7 @@ class Customizer extends React.PureComponent {
     const { layouts } = this.state
 
     return (
-      <>
+      <DbrProvider>
         <Suspense fallback={<div />}>
           <Filters
             widgets={this.props.widgets}
@@ -131,14 +132,15 @@ class Customizer extends React.PureComponent {
             cols={cols}
             breakpoints={breakpoints}
             onLayoutChange={this.onLayoutChange}
-            isDraggable={true}
+            isDraggable={false}
             isResizable={false}
             rowHeight={rowHeight}
+            resizeHandles={[]}
           >
             {this.Widgets()}
           </ResponsiveReactGridLayout>
         </div>
-      </>
+      </DbrProvider>
     )
   }
 }

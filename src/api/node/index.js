@@ -1,7 +1,3 @@
 export {
-  useWidgetNodes,
-  useEditNode,
-  useDeleteNode,
-  useAddNode,
-  useEditNodesTree
+  getWidgetNodes
 } from './node'
