@@ -19,7 +19,7 @@ const TreeContent = React.memo((props) => {
     const [searchFoundCount, setSearchFoundCount] = useState(null)
     const [prevTreeData, setPrevTreeData] = useState([])
 
-    const { treeData, onEditNode, onRemoveNode, onAddNode, setTreeData, onMoveNode } = props;
+    const { treeData, onAddNode, setTreeData, onMoveNode } = props;
 
     useEffect(() => {
         getWidgetNodes(props.widgetId).then((data) => {
@@ -89,42 +89,13 @@ const TreeContent = React.memo((props) => {
 
         console.log("node id", node._id);
         setMapData(props.widgetId, {
-            nodes
+            currentNodeId: node._id,
+            nodes,
+            mapNodes: nodes,
         })
     }
 
     const visibleNodesCount = getVisibleNodeCount({ treeData })
-    const canEdit = false
-
-    const renderNodeButtons = (rowInfo) => {
-        if (!canEdit) {
-            return []
-        }
-
-        return [
-            <button
-                className="btn-outline-dark transparent action"
-                onClick={(e) => { e.stopPropagation(); onAddNode(rowInfo) }}
-                title="add"
-            >
-                <i className="simple-icon-plus" />
-            </button>,
-            <button
-                className="btn-outline-success transparent action"
-                onClick={(e) => { e.stopPropagation(); onEditNode(rowInfo) }}
-                title="edit"
-            >
-                <i className="simple-icon-pencil" />
-            </button>,
-            <button
-                className="btn-outline-danger transparent action"
-                onClick={(e) => { e.stopPropagation(); onRemoveNode(rowInfo) }}
-                title="delete"
-            >
-                <i className="simple-icon-trash" />
-            </button>
-        ]
-    }
 
     return (
         <div className="wrapper">
@@ -137,12 +108,6 @@ const TreeContent = React.memo((props) => {
                     searchFoundCount={searchFoundCount}
                     onSearchChange={setSearchString}
                 />
-                {canEdit &&
-                    <button onClick={onAddNode} className='btn btn-light ml-1'>
-                        <i className="simple-icon-plus mr-2" />
-                        Add Node
-                    </button>
-                }
             </div>
             <div className="tree-wrapper">
                 <SortableTree
@@ -151,7 +116,7 @@ const TreeContent = React.memo((props) => {
                     treeData={treeData}
                     onChange={setTreeData}
                     rowHeight={55}
-                    canDrag={() => canEdit}
+                    canDrag={false}
                     canDrop={({ nextParent }) => !nextParent || !nextParent.noChildren}
                     searchQuery={searchString}
                     style={{ height: 55 * visibleNodesCount + 20 }}
@@ -166,7 +131,6 @@ const TreeContent = React.memo((props) => {
                     generateNodeProps={rowInfo => ({
                         title: `${rowInfo.node.name}`,
                         onClick: (e) => handleNodeClick(e, rowInfo.node),
-                        buttons: renderNodeButtons(rowInfo),
                         className: (currentNodeId == rowInfo.node._id) ? 'rst__rowSearchMatch rst__rowSearchFocus' : ''
                     })}
                 />

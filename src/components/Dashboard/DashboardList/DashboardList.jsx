@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row } from "reactstrap";
 import PropTypes from 'prop-types'
 import { getDashboards } from "../../../api/dashboard";
-import ImageListView from "./ImageListView";
+import DashboardItem from "./DashboardItem";
 
 const DashboardList = ({
     token,
@@ -23,9 +23,10 @@ const DashboardList = ({
     return (
         <Row>
             {
-                dashboards?.length > 0 && dashboards.map(dashboard => <ImageListView
+                dashboards?.length > 0 && dashboards.map(dashboard => <DashboardItem
                     onClick={onClick || false}
-                    dashboard={dashboard} />)
+                    dashboard={dashboard} />
+                )
             }
         </Row>
     )

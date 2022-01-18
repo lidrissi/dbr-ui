@@ -11,14 +11,13 @@ import {
   Badge,
 } from 'reactstrap'
 
-const ImageListView = ({ dashboard, onClick }) => {
+const ImageListView = ({ name, description, updatedAt, onClick }) => {
 
-  const updatedAt = new Date(dashboard.updatedAt).toDateString()
   return (
-    <Col sm="6" lg="4" xl="3" className="mb-3" key={dashboard._id}>
+    <Col sm="6" lg="4" xl="3" className="mb-3">
       <Card>
         <div className="position-relative">
-          <CardImg top alt={dashboard.name} src={`assets/images/dashboard.png`} loading="lazy" />
+          <CardImg top alt={name} src={`assets/images/dashboard.png`} loading="lazy" />
           <Badge
             type="button"
             pill
@@ -33,12 +32,12 @@ const ImageListView = ({ dashboard, onClick }) => {
           <Row>
             <Col xxs="10" className="mb-3">
               <CardSubtitle className="text-mlarge mb-1 text-capitalize">
-                {dashboard.name}
+                {name}
               </CardSubtitle>
               <CardText className="text-muted text-one mb-0 font-weight-light">
-                {dashboard?.description?.toLowerCase()}
+                {(description && description.length > 0) ? description?.toLowerCase() : ''}
                 <br />
-                {updatedAt}
+                {new Date(updatedAt)?.toDateString() || ''}
               </CardText>
             </Col>
           </Row>
@@ -49,17 +48,9 @@ const ImageListView = ({ dashboard, onClick }) => {
 }
 
 ImageListView.propTypes = {
-  changeMode: PropTypes.func,
-  dashboard: PropTypes.shape({
-    _id: PropTypes.any,
-    description: PropTypes.string,
-    img: PropTypes.func,
-    name: PropTypes.any,
-    path: PropTypes.any,
-    type: PropTypes.string,
-    updatedAt: PropTypes.any,
-  }),
-  setDashboardDetails: PropTypes.func,
+  name: PropTypes.any,
+  description: PropTypes.string,
+  updatedAt: PropTypes.any,
 }
 
 export default React.memo(ImageListView)

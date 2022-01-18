@@ -8,10 +8,10 @@ import {
   useLoadScript,
 } from '@react-google-maps/api'
 import PropTypes from 'prop-types'
-import { calculateMarkerBounds, calculatePolygonBounds } from 'utils/map.utils'
 import mapWorker from './map.worker'
 import WebWorker from './workerSetup'
 import mapStyles from './mapStyles.json'
+import { calculateMarkerBounds, calculatePolygonBounds } from '../../../helpers/map'
 import PolygonWrapper from './components/PolygonWrapper'
 import { getWidgetNodes } from '../../../api/node'
 import useNodeNotification from '../Tree/useNodeNotification'
