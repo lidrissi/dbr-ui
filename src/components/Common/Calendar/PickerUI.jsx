@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { dayjs } from './utils'
 
@@ -130,12 +129,5 @@ function PickerUI(props) {
     </Component>
   )
 }
-
-// const mapStateToProps = ({ datePicker }) => {
-//   const { dateRange } = datePicker
-//   return {
-//     dateRange,
-//   }
-// }
 
 export default PickerUI

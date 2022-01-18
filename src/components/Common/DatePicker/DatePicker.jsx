@@ -11,15 +11,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 
 import * as dayjs from 'dayjs'
 import { LinkedCalendarUI } from '../Calendar'
-import { saveSelectedDateRange } from './DatePicker.actions'
 import { notificationService, mapParams } from '../../../services/NotificationService';
-
-const selector = ({ datePicker }) => {
-  const { dateRange } = datePicker
-  return {
-    dateRange,
-  }
-}
 
 const ranges = [
   {
@@ -67,9 +59,8 @@ let notification = { appParamsValue: {} }
 
 function DatePicker(props) {
   const { tag, onSendNotification } = props
-  const dispatch = {}//useDispatch()
   const [selectedDropdownItem, setSelectedDropdownItem] = useState()
-  const { dateRange } = {}// useSelector(selector, shallowEqual)
+  const [dateRange, setDateRange] = useState({ start: new Date().setDate(0), end: new Date() })
   const [modalBasic, setModalBasic] = useState(false)
 
   const { start, end } = dateRange
@@ -77,21 +68,17 @@ function DatePicker(props) {
   useEffect(() => {
     let startDate = tag.configuration.startDateRange !== null ? new Date(tag.configuration.startDateRange) : dayjs().startOf('month').toDate()
     let endDate = tag.configuration.endDateRange !== null ? new Date(tag.configuration.endDateRange) : dayjs().endOf('month').toDate()
-    dateRange.start = startDate
-    dateRange.end = endDate
-    dispatch(
-      saveSelectedDateRange({
-        start: startDate,
-        end: endDate,
-      })
-    );
+
+    setDateRange({
+      start: startDate,
+      end: endDate,
+    })
     handleDateNotification()
 
     notificationService.getNotification().subscribe(widgetNotification => {
       handleDateNotification()
       notification = widgetNotification
     })
-
   }, [])
 
   const handleDateNotification = () => {
@@ -101,13 +88,10 @@ function DatePicker(props) {
       const endDate = Date.parse(mapParams[appParam[1].value].split('-').reverse().join('/'))
       dateRange.start = startDate
       dateRange.end = endDate
-
-      dispatch(
-        saveSelectedDateRange({
-          start: startDate,
-          end: endDate,
-        })
-      );
+      setDateRange({
+        start: startDate,
+        end: endDate,
+      })
     }
   }
 
@@ -121,25 +105,20 @@ function DatePicker(props) {
   const handleClick = ({ value, name }) => {
     const { start, end } = value
     setSelectedDropdownItem(name);
-    dispatch(
-      saveSelectedDateRange({
-        start: new Date(start).toISOString(),
-        end: new Date(end).toISOString(),
-      })
-    );
+    setDateRange({
+      start: new Date(start).toISOString(),
+      end: new Date(end).toISOString(),
+    })
     dispatchDateFilterNotification(notification, start, end, tag);
   }
 
   const onDatesChange = useCallback(({ startDate, endDate }) => {
-    dispatch(
-      saveSelectedDateRange({
-        start: new Date(startDate).toISOString(),
-        end: new Date(endDate).toISOString(),
-      }),
-    );
+    setDateRange({
+      start: new Date(startDate).toISOString(),
+      end: new Date(endDate).toISOString(),
+    })
     toggleModal();
     dispatchDateFilterNotification(notification, startDate, endDate, tag);
-
   })
 
   const toggleModal = () => {
@@ -155,7 +134,6 @@ function DatePicker(props) {
   const endLabel = dayjs(end).format('MMM DD YYYY') //HH:mm
 
   return (
-
     <>
       <UncontrolledDropdown>
         <DropdownToggle caret tag="span" size="xs">
@@ -189,6 +167,7 @@ function DatePicker(props) {
           </DropdownItem>
           <Modal isOpen={modalBasic}>
             <LinkedCalendarUI
+              dateRange={dateRange}
               onDatesChange={onDatesChange}
               onCancel={toggleModal}
             />

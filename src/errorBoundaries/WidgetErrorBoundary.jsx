@@ -15,7 +15,7 @@ export default class WidgetErrorBoundary extends Component {
   }
 
   // eslint-disable-next-line no-unused-vars
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error) {
     // You can also log the error to an error reporting service
     this.setState({ error })
   }
@@ -26,7 +26,6 @@ export default class WidgetErrorBoundary extends Component {
     const { children } = this.props
     if (hasError) {
       // You can render any custom fallback UI
-      const path = window.location.href
       return (
         <div
           className="text-center"
@@ -34,7 +33,7 @@ export default class WidgetErrorBoundary extends Component {
         >
           <img
             // eslint-disable-next-line global-require
-            src={require('assets/images/iconwrong.svg')}
+            src={'assets/images/iconwrong.svg'}
             alt=""
             title=""
             style={{ width: '10%' }}

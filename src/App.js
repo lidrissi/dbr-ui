@@ -3,7 +3,7 @@ import { Dashboard } from "./components/Dashboard/Dashboard";
 function App() {
   return (
     <div className="App">
-      <Dashboard id='615ecad5b0e7105722873c63' />
+      <Dashboard id='616420fb167ae56cd721f19c' />
     </div>
   );
 }
