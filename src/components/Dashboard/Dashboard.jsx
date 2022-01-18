@@ -39,8 +39,6 @@ export const Dashboard = (props) => {
     //   widgets: widgetsObject,
     //   readOnly: true,
     //   appearance,
-    //   share,
-    //   owner
     // })
   }
 

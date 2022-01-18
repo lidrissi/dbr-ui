@@ -21,7 +21,7 @@ export default class WidgetErrorBoundary extends Component {
   }
 
   render() {
-    const { hasError, error } = this.state
+    const { hasError } = this.state
     // eslint-disable-next-line react/prop-types
     const { children } = this.props
     if (hasError) {
@@ -42,22 +42,6 @@ export default class WidgetErrorBoundary extends Component {
           <h3 className="text-muted m-2">
             Désolé, une erreur innatendue s’est produite...{' '}
           </h3>
-          {error && (
-            <div className="jumbotron p-4">
-              <div className="pb-2">
-                <strong>
-                  Si l&apos;erreur persiste, veuillez copier le message
-                  ci-dessous, et l&apos;envoyer à cet e-mail: <b>D4R@um6p.ma</b>{' '}
-                </strong>
-              </div>
-              <div>
-                path of the error : {path}
-                <br />
-                {error.stack && error.stack.toString()}
-              </div>
-              <br />
-            </div>
-          )}
         </div>
       )
     }
