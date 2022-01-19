@@ -15,17 +15,23 @@ const DashboardList = ({
     useEffect(() => {
         window.accessToken = token
         window.dbr_env = env
-        getDashboards().then(
-            (data) => setDashboards(data)
-        )
+        if (token) {
+            getDashboards().then(
+                (data) => setDashboards(data)
+            )
+        }
     }, [token, env])
 
     return (
         <Row>
             {
                 dashboards?.length > 0 && dashboards.map(dashboard => <DashboardItem
+                    key={dashboard._id}
                     onClick={onClick || false}
-                    dashboard={dashboard} />
+                    name={dashboard?.name}
+                    description={dashboard?.description}
+                    updatedAt={dashboard?.updatedAt}
+                />
                 )
             }
         </Row>

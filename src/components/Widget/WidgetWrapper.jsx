@@ -137,10 +137,8 @@ const WidgetWrapper = (props) => {
 
 WidgetWrapper.propTypes = {
   widget: PropTypes.shape({
-    folder: PropTypes.string,
-    icon: PropTypes.string,
     name: PropTypes.string,
-    type: PropTypes.string,
+    env: PropTypes.oneOf(['local', 'demo', 'sandbox']),
   }),
   showTitle: PropTypes.bool,
 }

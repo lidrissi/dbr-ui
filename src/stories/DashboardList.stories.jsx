@@ -35,4 +35,5 @@ const Template = (args) => <DashboardList {...args} />;
 export const List = Template.bind({});
 List.args = {
   token: '',
+  env: 'local'
 };

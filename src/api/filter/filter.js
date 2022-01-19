@@ -1,12 +1,10 @@
 import axios from '../axios'
-import { BACKEND_API_RESOURCES } from 'constants/resources'
-import { HEADERS } from 'helpers/headers'
+import { BACKEND_API_RESOURCES, getApiUrl } from 'constants/resources'
 
 export function getDashboardFilter(dashboardId) {
   const options = {
     method: BACKEND_API_RESOURCES.filter.getAll.method,
-    headers: HEADERS,
-    url: `${BACKEND_API_RESOURCES.filter.getAll.resource}/${dashboardId}`,
+    url: `${getApiUrl()}/${BACKEND_API_RESOURCES.filter.getAll.resource}/${dashboardId}`,
   }
   return axios(options)
     .then((res) => {

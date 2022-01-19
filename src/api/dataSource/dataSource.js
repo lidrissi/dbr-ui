@@ -1,6 +1,5 @@
 import axios from '../axios'
-import { BACKEND_API_RESOURCES } from 'constants/resources'
-import { HEADERS } from 'helpers/headers'
+import { BACKEND_API_RESOURCES, getApiUrl } from 'constants/resources'
 
 export const fetchDatasourceQuery = (datasource) => {
   delete datasource['queries']
@@ -9,8 +8,7 @@ export const fetchDatasourceQuery = (datasource) => {
 
   const options = {
     method: BACKEND_API_RESOURCES.datasource.fetchQuery.method,
-    headers: HEADERS,
-    url: BACKEND_API_RESOURCES.datasource.fetchQuery.resource,
+    url: `${getApiUrl()}/${BACKEND_API_RESOURCES.datasource.fetchQuery.resource}`,
     params: datasource
   }
 

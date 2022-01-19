@@ -57,12 +57,13 @@ export const Dashboard = (props) => {
   }
 
   useEffect(() => {
+    window.dbr_env = props.env
     if (props.id) {
       fetchWidgets()
       fetchFilters()
     }
   },
-    [props.id])
+    [props.id, props.env])
 
   return (
     <div className="container-fluid no-breadcrumbs page-dashboard">

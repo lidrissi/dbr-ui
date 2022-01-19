@@ -1,12 +1,10 @@
 import axios from '../axios'
-import { BACKEND_API_RESOURCES } from 'constants/resources'
-import { HEADERS } from 'helpers/headers'
+import { BACKEND_API_RESOURCES , getApiUrl} from 'constants/resources'
 
 export function getDashboards() {
   const options = {
     method: BACKEND_API_RESOURCES.dashboard.get.method,
-    headers: HEADERS,
-    url: BACKEND_API_RESOURCES.dashboard.get.resource,
+    url: `${getApiUrl()}/${BACKEND_API_RESOURCES.dashboard.get.resource}`,
   }
   return axios(options)
     .then((res) => {
@@ -20,8 +18,7 @@ export function getDashboards() {
 export const getDashboardWidgets = (id) => {
   const options = {
     method: BACKEND_API_RESOURCES.dashboard.getDashboardsWitgets.method,
-    headers: HEADERS,
-    url: `${BACKEND_API_RESOURCES.dashboard.getDashboardsWitgets.resource}` + "/" + id,
+    url: `${getApiUrl()}/${BACKEND_API_RESOURCES.dashboard.getDashboardsWitgets.resource}` + "/" + id,
   }
   return axios(options)
     .then((res) => {
