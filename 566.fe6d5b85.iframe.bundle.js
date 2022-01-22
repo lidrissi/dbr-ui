@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdbr_ui=self.webpackChunkdbr_ui||[]).push([[566],{"./src/components/Widget/Image/image.scss":function(__unused_webpack_module,__webpack_exports__,__webpack_require__){__webpack_require__.r(__webpack_exports__),__webpack_exports__.default={}}}]);
