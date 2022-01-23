@@ -5,8 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 export * from './components/Dashboard/Dashboard';
-
-
+export * from './components/Widget/WidgetWrapper';
+export * from './components/Dashboard/DashboardList/DashboardList';
+export * from './components/Dashboard/DashboardList/DashboardItem';
 
 ReactDOM.render(
   <App />,

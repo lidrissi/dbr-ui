@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useRef, lazy, memo } from "react";
 import io from 'socket.io-client'
 import InputText from "./InputTypeText";
+import DatePicker from "../Common/DatePicker";
+import SelectOptionFilter from "./SelectOptionFilter";
 import './filters.scss';
 
 import { Button } from "reactstrap";
 import { BACKEND_SOCKET_API_URL } from "constants/resources";
 import { mapParams, notificationService } from "../../services/NotificationService";
 
-const DatePicker = lazy(() =>
-  import(/* webpackChunkName: "DatePicker" */ '../Common/DatePicker'),
-)
-
-const SelectOptionFilter = lazy(() =>
-  import(/* webpackChunkName: "SelectOptionFilter" */ './SelectOptionFilter'),
-)
 
 const Filters = memo(({ filters, widgets }) => {
   const ref = useRef([]);

@@ -1,6 +1,13 @@
 import React, { lazy, memo, Suspense, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Card, CardBody, CardHeader } from 'reactstrap'
+import Map from "./Map";
+import Tree from "./Tree";
+import DataGrid from "./DataGrid";
+import Image from "./Image";
+import Text from "./Text";
+import GenericWidget from "./GenericWidget";
+
 import WidgetErrorBoundary from 'errorBoundaries/WidgetErrorBoundary'
 import './widgetWrapper.scss'
 import { fetchDatasourceQuery } from 'services/datasource/datasourceManager'
@@ -16,13 +23,6 @@ const WidgetWrapper = (props) => {
 
   const exportChart = React.useRef(null)
   const initChart = React.useRef(null)
-
-
-  useEffect(() => {
-    if (props.widget) {
-      loadWidget()
-    }
-  }, [])
 
   useEffect(() => {
     if (initChart?.current) {
@@ -66,33 +66,47 @@ const WidgetWrapper = (props) => {
 
   const loadWidget = () => {
     const { widget } = props
-    if (!widget.stWidget) {
+     if (!widget.stWidget) {
       return
     }
-    const loadedWidget = lazy(() => {
-      try {
-        const systemWidget = isSystemWidget(widget.stWidget.type)
-        return import(
-          `./${systemWidget ? widget.stWidget.type : 'GenericWidget'}`
-        )
-      } catch (error) {
-        return error
-      }
-    })
-    setWidget(loadedWidget)
+    const properties = {
+          widget:{
+                    ...widget.stWidget,
+                    ...widget,
+                    data: widgetData,
+                  },
+          onReceiveNotification:handleWidgetNotification,
+          exportChart,
+          initChart
+    }
+   
+    switch (widget.stWidget.type) {
+      case 'Tree':
+        return <Tree {...properties} />
+      case 'DataGrid':
+        return <DataGrid {...properties}/>
+      case 'Map':
+        return <Map {...properties}/>
+      case 'Image':
+        return <Image {...properties}/>
+      case 'Text':
+        return <Text {...properties}/>
+      default:
+        return <GenericWidget {...properties}/>
+    }
+    return null
   }
 
   const { widget, showTitle } = props
+
 
   if (!widget) {
     return null
   }
 
-  console.log('===', JSON.stringify(widget));
   return (
 
     <div className="widget h-100">
-      {Widget && Object.keys(Widget).length !== 0 && (
         <Card style={{ height: '100%' }} className="widget-card">
           {showTitle && widget.name && (
             <CardHeader className="py-1 px-3 widget-header">
@@ -112,17 +126,7 @@ const WidgetWrapper = (props) => {
           <CardBody className="p-0 position-relative h-100 overflow-auto" >
             <WidgetErrorBoundary>
               <Suspense fallback={<div className="loading" />}>
-                <Widget
-                  {...props}
-                  widget={{
-                    ...widget.stWidget,
-                    ...widget,
-                    data: widgetData,
-                  }}
-                  onReceiveNotification={handleWidgetNotification}
-                  exportChart={exportChart}
-                  initChart={initChart}
-                />
+                {loadWidget()}
                 {mode === 'NoDataFound' &&
                   <NoDataFound />
                 }
@@ -130,7 +134,6 @@ const WidgetWrapper = (props) => {
             </WidgetErrorBoundary>
           </CardBody>
         </Card>
-      )}
     </div>
   )
 }
