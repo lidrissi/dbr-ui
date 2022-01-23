@@ -9,7 +9,7 @@ import './customizer.scss';
 
 
 import { formatDate } from 'helpers/date'
-import WidgetWrapper from '../Widget/WidgetWrapper'
+import { WidgetWrapper } from '../Widget/WidgetWrapper'
 import { mapParams } from '../../services/NotificationService'
 import Filters from '../Filter/Filters'
 import { DbrProvider } from '../../services/context'

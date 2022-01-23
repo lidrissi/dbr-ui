@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Row } from "reactstrap";
 import PropTypes from 'prop-types'
 import { getDashboards } from "../../../api/dashboard";
-import DashboardItem from "./DashboardItem";
+import { DashboardItem } from "./DashboardItem";
 
-const DashboardList = ({
+export const DashboardList = ({
     token,
     env,
     onClick
@@ -42,4 +42,3 @@ DashboardList.propTypes = {
     env: PropTypes.oneOf(['local', 'demo', 'sandbox']),
     onClick: PropTypes.func
 };
-export default DashboardList

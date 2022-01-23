@@ -2,7 +2,7 @@ import React from "react";
 import ImageListView from "./ImageListView";
 import PropTypes from 'prop-types'
 
-const DashboardItem = (props) => {
+export const DashboardItem = (props) => {
 
     return (
         <ImageListView {...props}
@@ -16,4 +16,3 @@ DashboardItem.propTypes = {
     updatedAt: PropTypes.string,
     onClick: PropTypes.func
 };
-export default DashboardItem

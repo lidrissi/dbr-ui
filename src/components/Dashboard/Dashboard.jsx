@@ -33,13 +33,6 @@ export const Dashboard = (props) => {
       setLayouts(layouts)
     }
     )
-
-    // props.setDashboardData({
-    //   id: dashboardId,
-    //   widgets: widgetsObject,
-    //   readOnly: true,
-    //   appearance,
-    // })
   }
 
   const fetchFilters = () => {
@@ -58,6 +51,7 @@ export const Dashboard = (props) => {
 
   useEffect(() => {
     window.dbr_env = props.env
+    console.log("=====", window.dbr_env, props.env );
     if (props.id) {
       fetchWidgets()
       fetchFilters()

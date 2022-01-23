@@ -4,3 +4,37 @@
 
 DBR ui library helps you build UI components in isolation from your app's business logic, data, and context.
 That makes it easy to develop. 
+
+## Setup
+
+- 1 Add to package.json:
+
+```json
+  "dbr-ui": "https://github.com/lidrissi/dbr-ui.git#0.1.0"
+```
+
+Note: you can change the version
+
+- 2 Include the css file to the global style
+
+```js
+  @import "dbr-ui/build/css/main.css";
+```
+
+- 3 Start using components
+
+Ex: Dashboard component :
+
+```js
+import { Dashboard } from "dbr-ui";
+
+<Dashboard
+ id='615dac10b0e71057228737f0' 
+ env="demo"/> ;
+```
+## Components list : 
+
+- Dashboard
+- DashboardList
+- DashboardItem
+- WidgetWrapper

@@ -16,7 +16,7 @@ import { isSystemWidget } from 'constants/widget'
 import NoDataFound from './NoDataFound'
 import { mapParams } from '../../services/NotificationService'
 
-const WidgetWrapper = (props) => {
+export const WidgetWrapper = (props) => {
   const [Widget, setWidget] = useState({})
   const [widgetData, setWidgetData] = useState([])
   const [mode, setMode] = useState()
@@ -34,6 +34,11 @@ const WidgetWrapper = (props) => {
     fetchWidgetData(mapParams)
   }, [props.widget.mappingParams, props.widget.mappingResponseParams])
 
+  useEffect(() => {
+    if(props.env){
+      window.dbr_env = props.env
+    }
+  }, [props.env])
 
   const fetchWidgetData = async (paramsValue = []) => {
     if (!props.widget.datasource || (!props.widget.datasource.query && props.widget.datasource.type != 'csv_file')) {
@@ -105,7 +110,6 @@ const WidgetWrapper = (props) => {
   }
 
   return (
-
     <div className="widget h-100">
         <Card style={{ height: '100%' }} className="widget-card">
           {showTitle && widget.name && (
@@ -122,7 +126,6 @@ const WidgetWrapper = (props) => {
               <div className="separator" />
             </CardHeader>
           )}
-
           <CardBody className="p-0 position-relative h-100 overflow-auto" >
             <WidgetErrorBoundary>
               <Suspense fallback={<div className="loading" />}>
@@ -141,11 +144,8 @@ const WidgetWrapper = (props) => {
 WidgetWrapper.propTypes = {
   widget: PropTypes.shape({
     name: PropTypes.string,
-    env: PropTypes.oneOf(['local', 'demo', 'sandbox']),
+    stWidget: PropTypes.object,
   }),
   showTitle: PropTypes.bool,
+  env: PropTypes.oneOf(['local', 'demo', 'sandbox']),
 }
-
-
-
-export default WidgetWrapper
