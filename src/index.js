@@ -5,4 +5,5 @@
 // export * from './components/Dashboard/DashboardList/DashboardList';
 // export * from './components/Dashboard/DashboardList/DashboardItem';
 
-export const app_dbr = 'dbr-apppppppp';
+const APP_DBR = 'dbr-apppppppp';
+export { APP_DBR }
