@@ -91,10 +91,6 @@ module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
-    const publicPath = isEnvProduction
-    ? paths.servedPath
-    : isEnvDevelopment && "/";
-
   // Variable used for enabling profiling in Production
   // passed into alias object. Uses a flag if passed into the build command
   const isEnvProductionProfile =
@@ -114,7 +110,7 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        // css is located in `css`, use '../../' to locate index.html folder
+        // css is located in `static/css`, use '../../' to locate index.html folder
         // in production `paths.publicUrlOrPath` can be a relative path
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
@@ -213,17 +209,17 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'js/[name].js'
-        : isEnvDevelopment && 'js/bundle.js',
+        ? 'static/js/[name].js'
+        : isEnvDevelopment && 'static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? 'js/[name].chunk.js'
-        : isEnvDevelopment && 'js/[name].chunk.js',
-      assetModuleFilename: 'css/media/[name][ext]',
+        ? 'static/js/[name].chunk.js'
+        : isEnvDevelopment && 'static/js/[name].chunk.js',
+      assetModuleFilename: 'static/media/[name][ext]',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath,
+      publicPath: paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
@@ -397,7 +393,7 @@ module.exports = function (webpackEnv) {
                 {
                   loader: require.resolve('file-loader'),
                   options: {
-                    name: 'css/media/[name][ext]',
+                    name: 'static/media/[name].[hash].[ext]',
                   },
                 },
               ],
@@ -629,8 +625,8 @@ module.exports = function (webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: 'css/[name].css',
-          chunkFilename: 'css/[name].chunk.css',
+          filename: 'static/css/[name].css',
+          chunkFilename: 'static/css/[name].chunk.css',
         }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
@@ -638,24 +634,24 @@ module.exports = function (webpackEnv) {
       //   `index.html`
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
-      // new WebpackManifestPlugin({
-      //   fileName: 'asset-manifest.json',
-      //   publicPath: paths.publicUrlOrPath,
-      //   generate: (seed, files, entrypoints) => {
-      //     const manifestFiles = files.reduce((manifest, file) => {
-      //       manifest[file.name] = file.path;
-      //       return manifest;
-      //     }, seed);
-      //     const entrypointFiles = entrypoints.main.filter(
-      //       fileName => !fileName.endsWith('.map')
-      //     );
+      new WebpackManifestPlugin({
+        fileName: 'asset-manifest.json',
+        publicPath: paths.publicUrlOrPath,
+        generate: (seed, files, entrypoints) => {
+          const manifestFiles = files.reduce((manifest, file) => {
+            manifest[file.name] = file.path;
+            return manifest;
+          }, seed);
+          const entrypointFiles = entrypoints.main.filter(
+            fileName => !fileName.endsWith('.map')
+          );
 
-      //     return {
-      //       files: manifestFiles,
-      //       entrypoints: entrypointFiles,
-      //     };
-      //   },
-      // }),
+          return {
+            files: manifestFiles,
+            entrypoints: entrypointFiles,
+          };
+        },
+      }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.

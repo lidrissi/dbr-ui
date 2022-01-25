@@ -1,4 +1,4 @@
-// import "./styles/global.scss";
+import "./styles/global.scss";
 
 // export * from './components/Dashboard/Dashboard';
 // export * from './components/Widget/WidgetWrapper';

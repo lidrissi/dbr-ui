@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.css",
+    "main.js": "/static/js/main.js",
+    "static/media/Simple-Line-Icons.svg?v=2.4.0": "/static/media/Simple-Line-Icons.svg",
+    "static/media/Simple-Line-Icons.woff?v=2.4.0": "/static/media/Simple-Line-Icons.woff",
+    "static/media/Simple-Line-Icons.eot?v=2.4.0": "/static/media/Simple-Line-Icons.eot",
+    "static/media/Simple-Line-Icons.ttf?v=2.4.0": "/static/media/Simple-Line-Icons.ttf",
+    "static/media/Simple-Line-Icons.woff2?v=2.4.0": "/static/media/Simple-Line-Icons.woff2",
+    "index.html": "/index.html",
+    "main.css.map": "/static/css/main.css.map",
+    "main.js.map": "/static/js/main.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.css",
+    "static/js/main.js"
+  ]
+}
