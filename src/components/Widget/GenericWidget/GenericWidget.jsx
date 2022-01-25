@@ -1,18 +1,21 @@
-import React, { PureComponent } from 'react';
-import io from 'socket.io-client'
-import { BACKEND_SOCKET_API_URL } from 'constants/resources'
+import React, { PureComponent } from "react";
+import io from "socket.io-client";
+import { BACKEND_SOCKET_API_URL } from "../../../constants/resources";
 // amcharts imports
-import am4themes_animated from '@amcharts/amcharts4/themes/animated'
-import * as am4core from '@amcharts/amcharts4/core'
-import * as am4charts from '@amcharts/amcharts4/charts'
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import worldMoroccoLow from "@amcharts/amcharts4-geodata/worldMoroccoLow";
 import moroccoLow from "@amcharts/amcharts4-geodata/moroccoLow";
-import { mapParams, notificationService } from '../../../services/NotificationService';
+import {
+  mapParams,
+  notificationService,
+} from "../../../services/NotificationService";
 
 am4core.useTheme(am4themes_animated);
-am4core.addLicense('ch-custom-attribution')
+am4core.addLicense("ch-custom-attribution");
 
 class GenericWidget extends PureComponent {
   mappingParams = [];
@@ -24,21 +27,26 @@ class GenericWidget extends PureComponent {
     super(props);
 
     this.mappingParams = this.props.widget.mappingParams;
-    this.subscription = notificationService.getNotification().subscribe((widgetNotification) => {
-      this.handleNotification(widgetNotification)
-    });
+    this.subscription = notificationService
+      .getNotification()
+      .subscribe((widgetNotification) => {
+        this.handleNotification(widgetNotification);
+      });
     if (!this.socket) {
-
       this.socket = io(BACKEND_SOCKET_API_URL, {
-        path: '/back/socket',
-        transports: ['websocket', 'polling']
-      })
+        path: "/back/socket",
+        transports: ["websocket", "polling"],
+      });
 
-      this.socket.on('connect', (socket) => {
+      this.socket.on("connect", (socket) => {
         notificationService.registerWidgetSocket(this.socket);
       });
       this.socket.on("RECEIVE_NOTIFICATION", (notification) => {
-        if (!notificationService.isWidgetRegistredInSocketPool(notification.widgetSocketId)) {
+        if (
+          !notificationService.isWidgetRegistredInSocketPool(
+            notification.widgetSocketId
+          )
+        ) {
           notificationService.sendNotification(notification.widgetNotification);
         }
       });
@@ -46,12 +54,15 @@ class GenericWidget extends PureComponent {
   }
 
   handleNotification = (widgetNotification) => {
-    if (JSON.stringify(this.lastAppParams) == JSON.stringify(widgetNotification.appParamsValue)) {
-      return
+    if (
+      JSON.stringify(this.lastAppParams) ==
+      JSON.stringify(widgetNotification.appParamsValue)
+    ) {
+      return;
     }
-    this.props.onReceiveNotification(widgetNotification.appParamsValue)
-    this.lastAppParams = { ...widgetNotification.appParamsValue }
-  }
+    this.props.onReceiveNotification(widgetNotification.appParamsValue);
+    this.lastAppParams = { ...widgetNotification.appParamsValue };
+  };
 
   setDashboardId() {
     // if (this.props.match.params.title) {
@@ -61,13 +72,14 @@ class GenericWidget extends PureComponent {
 
   renderWidget(widgetNotification) {
     if (widgetNotification) {
-      if (widgetNotification !== null
-        && widgetNotification !== undefined
+      if (
+        widgetNotification !== null &&
+        widgetNotification !== undefined
         // && widgetNotification.fromWidgetKey !== this.props.widget.widgetKey
       ) {
         try {
-          this.props.widget.config = this.jsonParser(this.props.widget.config)
-          if (this.props.widget.config.hasOwnProperty('render')) {
+          this.props.widget.config = this.jsonParser(this.props.widget.config);
+          if (this.props.widget.config.hasOwnProperty("render")) {
             const render = eval(this.props.widget.config.render);
             const renderParams = {
               chart: this.chart,
@@ -78,14 +90,13 @@ class GenericWidget extends PureComponent {
               worldMoroccoLow,
               moroccoLow,
               am4maps,
-              am4plugins_wordCloud
-            }
+              am4plugins_wordCloud,
+            };
 
             this.chart = render(renderParams);
             this.chart.dispatchEvent = this.dispathWidgetEvent.bind(this);
           }
-        }
-        catch (er) {
+        } catch (er) {
           console.log(er);
         }
       }
@@ -96,45 +107,49 @@ class GenericWidget extends PureComponent {
     notificationService.sendNotification(widgetNotification);
 
     // notify others dashboards
-    this.socket.emit("SEND_NOTIFICATION", { widgetSocketId: this.socket.id, widgetNotification });
+    this.socket.emit("SEND_NOTIFICATION", {
+      widgetSocketId: this.socket.id,
+      widgetNotification,
+    });
   }
 
   dispathWidgetEvent(widgetParam) {
     if (!this.mappingParams || this.mappingParams.length == 0) {
-      return
+      return;
     }
 
     const widgetNotification = {
       fromWidgetKey: this.props.widget._id,
-      appParamsValue: {}
+      appParamsValue: {},
     };
-    this.mappingParams.forEach(item => {
-      widgetNotification.appParamsValue[item.appParam] = widgetParam[item.responseParam];
-    })
+    this.mappingParams.forEach((item) => {
+      widgetNotification.appParamsValue[item.appParam] =
+        widgetParam[item.responseParam];
+    });
 
     this.notifyAllWidgets(widgetNotification);
   }
 
   componentDidMount() {
-    this.initializeWidget()
-    this.props.exportChart.current = this.exportChart
-    this.props.initChart.current = this.initializeWidget
+    this.initializeWidget();
+    this.props.exportChart.current = this.exportChart;
+    this.props.initChart.current = this.initializeWidget;
   }
 
   componentWillUnmount() {
-    if (this.subscription)
-      this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
   exportChart = (type) => {
     this.chart.exporting.export(type);
-  }
+  };
 
   jsonParser(toParse) {
-    let parsed = toParse
-    if (typeof toParse === 'string') parsed = JSON.parse(toParse);
-    if (typeof parsed === 'string') { // case of over-stringified strings
-      return this.jsonParser(parsed)
+    let parsed = toParse;
+    if (typeof toParse === "string") parsed = JSON.parse(toParse);
+    if (typeof parsed === "string") {
+      // case of over-stringified strings
+      return this.jsonParser(parsed);
     }
     return parsed;
   }
@@ -151,19 +166,22 @@ class GenericWidget extends PureComponent {
       try {
         const parsedConfig = this.jsonParser(this.props.widget.config);
         this.props.widget.config = parsedConfig;
-      }
-      catch (er) {
+      } catch (er) {
         console.log(er);
       }
 
-      if (this.props.widget.config.hasOwnProperty('init')) {
+      if (this.props.widget.config.hasOwnProperty("init")) {
         // init chart from config
         const initChart = eval(this.props.widget.config.init);
         initChart(this.props);
-        this.chart = am4core.createFromConfig(this.props.widget.config, this.props.widget._id, this.props.widget.type);
+        this.chart = am4core.createFromConfig(
+          this.props.widget.config,
+          this.props.widget._id,
+          this.props.widget.type
+        );
       }
 
-      if (this.props.widget.config.hasOwnProperty('initChart')) {
+      if (this.props.widget.config.hasOwnProperty("initChart")) {
         // init chart from javascript code
         const initChart = eval(this.props.widget.config.initChart);
 
@@ -175,8 +193,8 @@ class GenericWidget extends PureComponent {
           worldMoroccoLow,
           moroccoLow,
           am4maps,
-          am4plugins_wordCloud
-        }
+          am4plugins_wordCloud,
+        };
 
         this.chart = initChart(initChartParams);
       }
@@ -186,20 +204,19 @@ class GenericWidget extends PureComponent {
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   render() {
     return (
       <div
         key={this.props.widget._id}
         id={this.props.widget._id}
-        className={`w-100 h-100 ${this.props.widget?.data?.length > 0 ? '' : 'd-none'}`}
+        className={`w-100 h-100 ${
+          this.props.widget?.data?.length > 0 ? "" : "d-none"
+        }`}
       />
     );
   }
-
-
 }
 
 export default GenericWidget;

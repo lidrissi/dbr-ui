@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
   font-family: 'iconsminds';
   src: url('iconsminds.eot?42207379');
   src: url('iconsminds.eot?42207379#iefix') format('embedded-opentype'),
@@ -8,7 +8,7 @@
     url('iconsminds.svg?42207379#iconsminds') format('svg');
   font-weight: normal;
   font-style: normal;
-} */
+}
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*

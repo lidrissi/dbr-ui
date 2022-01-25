@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function Th(props) {
-  const { className, onClick, style, children, colSpan, onMouseDown } = props
+  const { className, onClick, style, children, colSpan, onMouseDown } = props;
   Th.propTypes = {
     className: PropTypes.string,
     style: PropTypes.string,
@@ -10,7 +10,7 @@ export default function Th(props) {
     onClick: PropTypes.func,
     onMouseDown: PropTypes.func,
     colSpan: PropTypes.number,
-  }
+  };
 
   return (
     <th
@@ -22,5 +22,5 @@ export default function Th(props) {
     >
       {children}
     </th>
-  )
+  );
 }

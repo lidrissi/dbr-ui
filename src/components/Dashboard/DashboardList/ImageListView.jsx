@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import React from "react"
+import PropTypes from "prop-types";
+import React from "react";
 import {
   Row,
   Col,
@@ -9,14 +9,19 @@ import {
   CardImg,
   CardText,
   Badge,
-} from "reactstrap"
+} from "reactstrap";
 
 const ImageListView = ({ name, description, updatedAt, onClick }) => {
   return (
     <Col sm="6" lg="4" xl="3" className="mb-3">
       <Card>
         <div className="position-relative">
-          <CardImg top alt={name} src={`assets/images/dashboard.png`} loading="lazy" />
+          <CardImg
+            top
+            alt={name}
+            src={require(`../../../assets/dashboard.png`)}
+            loading="lazy"
+          />
           <Badge
             type="button"
             pill
@@ -34,17 +39,19 @@ const ImageListView = ({ name, description, updatedAt, onClick }) => {
                 {name}
               </CardSubtitle>
               <CardText className="text-muted text-one mb-0 font-weight-light">
-                {(description && description.length > 0) ? description?.toLowerCase() : ''}
+                {description && description.length > 0
+                  ? description?.toLowerCase()
+                  : ""}
                 <br />
-                {new Date(updatedAt)?.toDateString() || ''}
+                {new Date(updatedAt)?.toDateString() || ""}
               </CardText>
             </Col>
           </Row>
         </CardBody>
       </Card>
     </Col>
-  )
-}
+  );
+};
 
 ImageListView.propTypes = {
   name: PropTypes.any,

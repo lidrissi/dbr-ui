@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import io from "socket.io-client";
-import { BACKEND_SOCKET_API_URL } from "constants/resources";
+import { BACKEND_SOCKET_API_URL } from "../../constants/resources";
 import { isLoggedIn } from "utils/auth.utils";
 import { saveData, loadData } from "utils/localStorage.utils";
 

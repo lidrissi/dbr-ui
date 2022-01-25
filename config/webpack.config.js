@@ -67,7 +67,7 @@ module.exports = function(webpackEnv) {
     : isEnvDevelopment && "/";
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
-  const shouldUseRelativeAssetPaths = publicPath === "./";
+  const shouldUseRelativeAssetPaths = true; //publicPath === "./";
 
   // `publicUrl` is just like `publicPath`, but we will provide it to our app
   // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
@@ -84,7 +84,7 @@ module.exports = function(webpackEnv) {
       isEnvDevelopment && require.resolve("style-loader"),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        options: shouldUseRelativeAssetPaths ? { publicPath: "../../" } : {}
+        options: shouldUseRelativeAssetPaths ? { publicPath: "../" } : {}
       },
       {
         loader: require.resolve("css-loader"),
@@ -395,7 +395,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve("url-loader"),
               options: {
                 limit: imageInlineSizeLimit,
-                name: "static/media/[name].[hash:8].[ext]"
+                name: "media/[name].[ext]"
               }
             },
             // Process application JS with Babel.
@@ -537,7 +537,7 @@ module.exports = function(webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: "static/media/[name].[hash:8].[ext]"
+                name: "media/[name].[ext]"
               }
             }
             // ** STOP ** Are you adding a new loader?

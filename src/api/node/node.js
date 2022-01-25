@@ -1,6 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "../axios";
-import { BACKEND_API_RESOURCES, getApiUrl } from "constants/resources";
+import { BACKEND_API_RESOURCES, getApiUrl } from "../../constants/resources";
 
 export function getWidgetNodes(widget) {
   const options = {

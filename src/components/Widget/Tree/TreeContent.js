@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import SortableTree, { getVisibleNodeCount, find } from "react-sortable-tree";
 import "react-sortable-tree/style.css";
 
-import { listToTree } from "helpers/tree";
+import { listToTree } from "../../../helpers/tree";
 
 import SearchBar from "./SearchBar";
 import useNodeNotification from "./useNodeNotification";

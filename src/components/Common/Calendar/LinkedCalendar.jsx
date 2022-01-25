@@ -1,36 +1,36 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { dayjs } from './utils'
-import { Table } from './table/index'
-import CalendarBody from './CalendarBody'
-import CalendarHead from './CalendarHead'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { dayjs } from "./utils";
+import { Table } from "./table/index";
+import CalendarBody from "./CalendarBody";
+import CalendarHead from "./CalendarHead";
 
 export default function LinkedCalendar(props) {
   LinkedCalendar.propTypes = {
     children: PropTypes.array,
     dateRange: PropTypes.object,
-  }
+  };
   const {
     dateRange: { start },
-  } = props
-  const [leftCalendar, setLeftCalendar] = useState(dayjs(start))
+  } = props;
+  const [leftCalendar, setLeftCalendar] = useState(dayjs(start));
   const [rightCalendar, setRightCalendar] = useState(
-    dayjs(start).add(1, 'month'),
-  )
+    dayjs(start).add(1, "month")
+  );
 
   const handlePrev = (leftCal) => {
-    setLeftCalendar(leftCal)
-    setRightCalendar(leftCal.add(1, 'month'))
-  }
+    setLeftCalendar(leftCal);
+    setRightCalendar(leftCal.add(1, "month"));
+  };
 
   const handleNext = (rightCal) => {
-    setLeftCalendar(rightCal.subtract(1, 'month'))
-    setRightCalendar(rightCal)
-  }
+    setLeftCalendar(rightCal.subtract(1, "month"));
+    setRightCalendar(rightCal);
+  };
 
-  const leftState = { ...props, calendar: leftCalendar }
-  const rightState = { ...props, calendar: rightCalendar }
+  const leftState = { ...props, calendar: leftCalendar };
+  const rightState = { ...props, calendar: rightCalendar };
 
   const leftProps = {
     handlePrev,
@@ -39,7 +39,7 @@ export default function LinkedCalendar(props) {
     showNext: false,
     showPrev: true,
     ...leftState,
-  }
+  };
   const rightProps = {
     showPrev: false,
     showNext: true,
@@ -47,18 +47,18 @@ export default function LinkedCalendar(props) {
     handleNext,
     handleSelected: handleNext,
     ...rightState,
-  }
-  const { children } = props
+  };
+  const { children } = props;
   const className = classNames({
     // [`opens${opens}`]: true,
-    'daterangepicker show-calendar row px-2 pt-2': true,
-  })
+    "daterangepicker show-calendar row px-2 pt-2": true,
+  });
   return (
     <div
       className={className}
       style={{
-        left: 'auto',
-        display: 'flex',
+        left: "auto",
+        display: "flex",
       }}
     >
       <div key={0}>
@@ -79,5 +79,5 @@ export default function LinkedCalendar(props) {
       </div>
       {children}
     </div>
-  )
+  );
 }

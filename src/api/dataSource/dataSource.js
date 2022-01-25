@@ -1,5 +1,5 @@
 import axios from "../axios";
-import { BACKEND_API_RESOURCES, getApiUrl } from "constants/resources";
+import { BACKEND_API_RESOURCES, getApiUrl } from "../../constants/resources";
 
 export const fetchDatasourceQuery = (datasource) => {
   delete datasource["queries"];

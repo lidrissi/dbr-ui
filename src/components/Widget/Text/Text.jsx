@@ -1,9 +1,7 @@
 import React, { memo, useEffect, useRef } from "react";
 
-const Text = memo(({ widget,
-}) => {
-
-  const textRef = useRef(null)
+const Text = memo(({ widget }) => {
+  const textRef = useRef(null);
 
   useEffect(() => {
     if (textRef.current) {
@@ -13,9 +11,12 @@ const Text = memo(({ widget,
 
   return (
     <>
-      <div className="pl-2 pr-2 d-flex align-items-center h-100" ref={textRef} />
+      <div
+        className="pl-2 pr-2 d-flex align-items-center h-100"
+        ref={textRef}
+      />
     </>
-  )
-})
+  );
+});
 
 export default Text;
