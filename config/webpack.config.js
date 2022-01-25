@@ -25,7 +25,7 @@ const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const eslint = require("eslint");
 
-const postcssNormalize = require("postcss-normalize");
+// const postcssNormalize = require("postcss-normalize");
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -111,7 +111,7 @@ module.exports = function(webpackEnv) {
               // Adds PostCSS Normalize as the reset css with default options,
               // so that it honors browserslist config in package.json
               // which in turn let's users customize the target behavior as per their needs.
-              postcssNormalize()
+              //postcssNormalize()
             ]
           },
           sourceMap: isEnvProduction && shouldUseSourceMap

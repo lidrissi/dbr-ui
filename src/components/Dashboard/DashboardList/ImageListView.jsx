@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import PropTypes from "prop-types"
+import React from "react"
 import {
   Row,
   Col,
@@ -9,10 +9,9 @@ import {
   CardImg,
   CardText,
   Badge,
-} from 'reactstrap'
+} from "reactstrap"
 
 const ImageListView = ({ name, description, updatedAt, onClick }) => {
-
   return (
     <Col sm="6" lg="4" xl="3" className="mb-3">
       <Card>
@@ -51,6 +50,6 @@ ImageListView.propTypes = {
   name: PropTypes.any,
   description: PropTypes.string,
   updatedAt: PropTypes.any,
-}
+};
 
-export default React.memo(ImageListView)
+export default React.memo(ImageListView);

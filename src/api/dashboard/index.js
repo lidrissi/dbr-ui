@@ -1,4 +1,1 @@
-export {
-  getDashboards,
-  getDashboardWidgets
-} from './dashboard'
+export { getDashboards, getDashboardWidgets } from "./dashboard";

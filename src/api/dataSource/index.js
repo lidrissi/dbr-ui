@@ -1,3 +1,1 @@
-export {
-  fetchDatasourceQuery
-} from './dataSource'
+export { fetchDatasourceQuery } from "./dataSource";

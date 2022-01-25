@@ -1,3 +1,1 @@
-export {
-  getWidgetNodes
-} from './node'
+export { getWidgetNodes } from "./node";

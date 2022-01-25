@@ -1,3 +1,3 @@
-import LinkedCalendarUI from './LinkedCalendarUI'
+import LinkedCalendarUI from "./LinkedCalendarUI";
 
-export { LinkedCalendarUI }
+export { LinkedCalendarUI };

@@ -1,3 +1,3 @@
-import GenericWidget from './GenericWidget'
+import GenericWidget from "./GenericWidget";
 
-export default GenericWidget
+export default GenericWidget;

@@ -1,3 +1,1 @@
-export {
-    getDashboardFilter
-} from "./filter"
+export { getDashboardFilter } from "./filter";

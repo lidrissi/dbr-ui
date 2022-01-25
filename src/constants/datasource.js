@@ -1,1 +1,1 @@
-export const noQueryDatasource = (type) => type === 'csv_file'
+export const noQueryDatasource = (type) => type === "csv_file";
